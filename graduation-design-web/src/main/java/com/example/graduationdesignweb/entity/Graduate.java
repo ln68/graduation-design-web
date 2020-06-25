@@ -1,5 +1,6 @@
 package com.example.graduationdesignweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,12 +11,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({"teacher", "course"})
 public class Graduate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String detail;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @MapsId
+    private User user;
     @ManyToOne
     private Teacher teacher;
     @OneToMany(mappedBy = "graduate" )
