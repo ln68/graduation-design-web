@@ -19,8 +19,8 @@ public class Teacher {
     private String name;
     private Integer quantity;
     private Integer ranges;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @MapsId
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})//级联操作，先持久化user再持久化teacher一个人对应一个用户，单向关系，在用户那边找不到，由老师映射成User一个用户
+    @MapsId//共用主键
     private User user;
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses;

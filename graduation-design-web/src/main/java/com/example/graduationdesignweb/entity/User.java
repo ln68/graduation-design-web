@@ -16,14 +16,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @Column(unique = true)
+    @Column(unique = true)//唯一约束，防止冲突异常
     private Integer number;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//序列化时忽略，java对象转user时忽略掉，反序列化时正常
     private String password;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Role role;
+    private Role role;//角色，用枚举
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime insertTime;
 }
+//用户登录用的老师那边的id，学生那边的id
+//User-1：老师id-1
+//User-2：学生id-1
