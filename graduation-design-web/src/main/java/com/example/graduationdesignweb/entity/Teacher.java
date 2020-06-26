@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private Integer quantity;
     private Integer ranges;
@@ -34,4 +35,8 @@ public class Teacher {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+
+    public Teacher(Integer id) {
+        this.id = id;
+    }
 }

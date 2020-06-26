@@ -1,4 +1,10 @@
 package com.example.graduationdesignweb.repository;
 
-public class ElectiveRepository {
+
+import com.example.graduationdesignweb.entity.Elective;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ElectiveRepository extends BaseRepository<Elective, Integer> {
+
 }
