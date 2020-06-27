@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@JsonIgnoreProperties({"courses", "graduates"})
+@JsonIgnoreProperties({"courses", "graduates"})//序列化时忽略courses，graduates
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,8 @@ public class Teacher {
     private List<Course> courses;
     @OneToMany(mappedBy = "teacher" )
     private List<Graduate> graduates;
+    @OneToMany(mappedBy = "teacher")
+    private List<Direction>  directions;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)

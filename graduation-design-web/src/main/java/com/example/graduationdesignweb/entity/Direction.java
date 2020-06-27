@@ -8,25 +8,19 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+@Entity
 @Data
 @NoArgsConstructor
-@Entity
-@JsonIgnoreProperties({"teacher", "course"})
-public class Graduate {
+public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private String detail;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @MapsId
-    private User user;
     @ManyToOne
     private Teacher teacher;
-    @OneToMany(mappedBy = "graduate" )
-    private List<Elective> courseElectives;
-    @OneToMany(mappedBy = "graduate")
-    private List<DirectionGraduate> directionGraduates;
+    @OneToMany(mappedBy = "direction")
+    private List<DirectionGraduate> directionElectives;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
@@ -35,7 +29,4 @@ public class Graduate {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
-    public Graduate(Integer id) {
-        this.id = id;
-    }
 }

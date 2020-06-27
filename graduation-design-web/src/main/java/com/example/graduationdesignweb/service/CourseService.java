@@ -1,13 +1,7 @@
 package com.example.graduationdesignweb.service;
 
-import com.example.graduationdesignweb.entity.Course;
-import com.example.graduationdesignweb.entity.Graduate;
-import com.example.graduationdesignweb.entity.Teacher;
-import com.example.graduationdesignweb.entity.User;
-import com.example.graduationdesignweb.repository.CourseRepository;
-import com.example.graduationdesignweb.repository.GraduateRepository;
-import com.example.graduationdesignweb.repository.TeacherRepository;
-import com.example.graduationdesignweb.repository.UserRepository;
+import com.example.graduationdesignweb.entity.*;
+import com.example.graduationdesignweb.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,16 +25,39 @@ public class CourseService {
     private PasswordEncoder encoder;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DirectionRepository directionRepository;
+    @Autowired
+    private ElectiveRepository electiveRepository;
 
     public Course addCourse(Course c) {
         return courseRepository.refresh(courseRepository.save(c));
     }
-
-    public List<Course> listCourses(int tid) {
+    public Direction addDirection(Direction d) {
+    return directionRepository.refresh( directionRepository.save( d ));
+    }
+    public List<Direction> directions(int tid) {
+        return teacherRepository.getOne(tid).getDirections();
+    }
+    public Direction getDirection(int did, int uid) {
+        return directionRepository.findById(did).orElse( null );}
+    public List<Course> courses(int tid) {
         return teacherRepository.getOne(tid).getCourses();
     }
     public Course getCourse(int cid, int uid) {
         return courseRepository.find(cid, uid);
+    }
+    public Elective elective(int gid,int cid) {
+        Elective Elective =new Elective();
+        Course course=courseRepository.findById(cid).orElse(null);
+        Graduate graduate=graduateRepository.findById( gid ).orElse( null );
+        if(graduate!=null&&course!=null){
+            Elective.setGraduate(graduate);
+            Elective.setCourse(course);
+            electiveRepository.save(Elective);
+        }
+        return Elective;
+
     }
 
     /**
@@ -58,7 +75,7 @@ public class CourseService {
                     u.setRole(User.Role.GRADUATE);
                     return g;
                 });
-      graduate.setTeacher( new Teacher(tid) );
+        graduate.setTeacher( new Teacher(tid) );
         graduateRepository.save(graduate);
         return graduate;
     }

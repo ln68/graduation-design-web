@@ -1,32 +1,23 @@
 package com.example.graduationdesignweb.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties({"teacher", "course"})
-public class Graduate {
+public class DirectionGraduate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
     private String detail;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @MapsId
-    private User user;
     @ManyToOne
-    private Teacher teacher;
-    @OneToMany(mappedBy = "graduate" )
-    private List<Elective> courseElectives;
-    @OneToMany(mappedBy = "graduate")
-    private List<DirectionGraduate> directionGraduates;
+    private Graduate graduate;
+    @ManyToOne
+    private Direction direction;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
@@ -35,7 +26,5 @@ public class Graduate {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
-    public Graduate(Integer id) {
-        this.id = id;
-    }
 }
+

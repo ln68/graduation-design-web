@@ -3,14 +3,14 @@ GET http://localhost:8080/api/teacher/index
 Authorization: {{token}}
 
 ###
-POST http://localhost:8080/api/teacher/students
+POST http://localhost:8080/api/teacher/graduates
 Content-Type: application/json
 Authorization: {{token}}
 
 {
   "user": {
-    "name": "SUN",
-    "number": 2017001
+    "name": "KK",
+    "number": 2017005
   }
 }
 
@@ -33,6 +33,15 @@ Authorization: {{token}}
 ###
 GET http://localhost:8080/api/teacher/welcome
 Authorization: {{token}}
+
+### 添加方向
+POST http://localhost:8080/api/teacher/directions
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+"name":"移动应用开发"
+}
 
 ### 添加课程
 POST http://localhost:8080/api/teacher/courses
